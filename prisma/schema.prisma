@@ -1,0 +1,90 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Event {
+  id              String        @id @default(cuid())
+  name            String
+  date            DateTime
+  location        String
+  tableCapacity   Int           @default(10)
+  pricePerTable   Float
+  depositAmount   Float
+  status          String        @default("ACTIVE") // ACTIVE, CLOSED
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  
+  tables          Table[]
+  reservations    Reservation[]
+}
+
+model Table {
+  id              String        @id @default(cuid())
+  eventId         String
+  tableNo         String
+  zone            String        @default("General")
+  capacity        Int           @default(10)
+  priceOverride   Float?
+  posX            Float         @default(0)
+  posY            Float         @default(0)
+  status          String        @default("OPEN") // OPEN, CLOSED
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  
+  event           Event         @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  reservations    Reservation[]
+  
+  @@unique([eventId, tableNo])
+}
+
+model Reservation {
+  id              String        @id @default(cuid())
+  eventId         String
+  tableId         String
+  customerName    String
+  phone           String
+  qty             Int           // Number of seats reserved
+  totalAmount     Float
+  depositAmount   Float
+  paidAmount      Float         @default(0)
+  status          String        @default("HOLD") // HOLD, PENDING_PAYMENT, WAITING_APPROVAL, CONFIRMED, CANCELED
+  holdExpiresAt   DateTime?
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  
+  event           Event         @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  table           Table         @relation(fields: [tableId], references: [id], onDelete: Cascade)
+  payments        Payment[]
+  checkIns        CheckIn[]
+}
+
+model Payment {
+  id              String        @id @default(cuid())
+  reservationId   String
+  method          String        @default("PROMPTPAY") // PROMPTPAY, CASH
+  amount          Float
+  slipUrl         String?
+  verifyStatus    String        @default("PENDING") // PENDING, APPROVED, REJECTED
+  paidAt          DateTime      @default(now())
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  
+  reservation     Reservation   @relation(fields: [reservationId], references: [id], onDelete: Cascade)
+}
+
+model CheckIn {
+  id              String        @id @default(cuid())
+  reservationId   String
+  checkedInAt     DateTime      @default(now())
+  checkedInBy     String?
+  
+  reservation     Reservation   @relation(fields: [reservationId], references: [id], onDelete: Cascade)
+}
