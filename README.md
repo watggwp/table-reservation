@@ -23,6 +23,44 @@
 - 📊 **รายงาน** - สรุปยอดขาย, Export CSV
 - 👤 **จัดการเช็คอิน** - ดูรายชื่อผู้เข้างาน
 
+## 📸 System Preview
+
+<p align="center">
+  <img src="./images/preview-1.png" width="340" />
+  <img src="./images/preview-2.png" width="340" />
+</p>
+
+<p align="center">
+  <img src="./images/preview-3.png" width="340" />
+  <img src="./images/preview-4.png" width="340" />
+</p>
+
+<p align="center">
+  <img src="./images/preview-5.png" width="340" />
+  <img src="./images/preview-6.png" width="340" />
+</p>
+
+<p align="center">
+  <img src="./images/preview-7.png" width="340" />
+  <img src="./images/preview-8.png" width="340" />
+</p>
+
+<p align="center">
+  <img src="./images/preview-9.png" width="340" />
+  <img src="./images/preview-10.png" width="340" />
+</p>
+
+<p align="center">
+  <img src="./images/preview-11.png" width="340" />
+  <img src="./images/preview-12.png" width="340" />
+</p>
+
+<p align="center">
+  <img src="./images/preview-13.png" width="340" />
+  <img src="./images/preview-14.png" width="340" />
+</p>
+
+
 ## 🚀 เทคโนโลยีที่ใช้
 
 - **Frontend**: Next.js 16.1.1 (App Router), React, TypeScript
